@@ -11,7 +11,8 @@
     <body>
     <div class="container mt-3">
         <h2>Registration form</h2>
-        <form class="needs-validation" id="student_registration" novalidate>
+        <form class="needs-validation" id="student_registration" method="POST" action="{{route('student.save')}}" novalidate>
+            @csrf
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="mb-3 mt-3">

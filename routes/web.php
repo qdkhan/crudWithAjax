@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['controller' => StudentController::class, 'as' => 'student.'], function () {
+    Route::post('save-data', 'saveData')->name('save');
+  
+});
+
+// Route::name('student.')->controller(StudentController::class)->group(function () {
+//     Route::post('/save-data', 'saveData')->name('save');
+// });
