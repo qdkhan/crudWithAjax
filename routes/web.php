@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AjaxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['controller' => StudentController::class, 'as' => 'student.'], function () {
+Route::group(['controller' => AjaxController::class, 'as' => 'student.'], function () {
     Route::post('save-data', 'saveData')->name('save');
   
 });

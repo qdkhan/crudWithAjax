@@ -15,7 +15,16 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('choice')->comment('hockey,football,cricket')->nullable();
+            $table->enum('gender', ['1', '2'])->comment('1=male, 2=female')->default('1')->nullable();
+            $table->string('images')->nullable();
+            $table->longText('description');
+            $table->softDeletes();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
