@@ -10,39 +10,51 @@
     </head>
     <body>
     <div class="container mt-3">
+        @if(session()->has('message'))
+            <p class="alert alert-success" role="alert">{{ session()->get('message') }}</p>
+        @endif
         <h2>Registration form</h2>
         <form class="needs-validation" id="student_registration" method="POST" action="{{route('student.save')}}" novalidate>
             @csrf
             <div class="row justify-content-center">
                 <div class="col-md-6">
                 <div class="mb-3 mt-3">
-                    <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
+                    <label for="name" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" value="{{old('name')}}" name="name" required>
                         <div class="invalid-feedback"> This field is required.</div>
                 </div>
+                @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="mb-3 mt-3">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" value="{{old('email')}}" name="email" required>
                     <div class="invalid-feedback"> This field is required.</div>
                 </div>
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="mb-3 mt-3">
-                    <label for="phone">Phone:</label>
-                    <input type="tel" class="form-control" id="phone" placeholder="Enter phone" name="phone" required>
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="Enter phone" value="{{old('phone')}}" name="phone" required>
                     <div class="invalid-feedback"> This field is required.</div>
                 </div>
-
+                @error('phone')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="mb-3 mt-3">
-                    <label>Pick Choice:
-                        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="choice[]" value="hockey">Hockey</div>
-                        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="choice[]" value="football">Football</div>
-                        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="choice[]" value="cricket" >Cricket</div>
-                    </label>
+                    <label class="form-label">Pick Choice: </label>
+                        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="choice[]" value="hockey" id='choice1'><label for='choice1' class="form-label">Hockey</label></div>
+                        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="choice[]" value="football" id='choice2'><label for='choice2' class="form-label">Football</label></div>
+                        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="choice[]" value="cricket" id='choice3'><label for='choice3' class="form-label">Cricket</label></div>
                 </div>
-
+                @error('choice')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="mb-3 mt-3">
-                    <label>Gender:</label>
+                    <label class="form-label">Gender:</label>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="1">
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="1" checked>
                             <label class="form-check-label" for="male">Male</label>
                         </div>
                         <div class="form-check form-check-inline">
@@ -51,10 +63,25 @@
                         </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" auto-complete="false" name="pwd" required>
+                <div class="mb-3 mt-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" value="{{old('password')}}" auto-complete="false" name="password" required>
                     <div class="invalid-feedback"> This field is required.</div>
+                </div>
+                @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+                <div class="mb-3 mt-3">
+                    <label for="images" class="form-label">Upload File</label>
+                    <input class="form-control" type="file" accept=".jpeg,.png,.jpg," name="images[]" id="images" multiple>
+                    <div class="invalid-feedback"> This field is required.</div>
+                </div>
+                @error('images')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+                <div class="mb-3 mt-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea class="form-control" id="description" name="description" value="{{old('description')}}" rows="3"></textarea>
                 </div>
                     <button type="submit" onclick="validateForm('student_registration')" class="btn btn-primary">Submit</button>
                 </div>
@@ -65,16 +92,3 @@
     <script src="{{url('assets/js/custom.js')}}"></script>
     </body>
 </html>
-
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-  <label class="form-check-label" for="inlineCheckbox1">1</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-  <label class="form-check-label" for="inlineCheckbox2">2</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
-  <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
-</div>
