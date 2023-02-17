@@ -15,8 +15,8 @@ class AjaxController extends Controller
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|email|unique:students,email,NULL,id,deleted_at,NULL|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-                'phone' => 'required|min:10|max:15',
-                'choice.*' => 'sometimes|required|array|string|distinct|min:1',
+                'phone' => 'required|digits_between:10,15',
+                'choice[]' => 'sometimes|required|array|string|distinct|min:1',
                 'gender' => 'required|numeric|min:1|max:2',
                 'password' => 'required|min:4',
                 // 'images.*' => 'image|mimes:jpeg,png,jpg'
