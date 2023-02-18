@@ -14,7 +14,7 @@
             <p class="alert alert-success" role="alert">{{ session()->get('message') }}</p>
         @endif
         <h2>Registration form</h2>
-        <form class="needs-validation" id="student_registration" method="POST" action="{{route('student.save')}}" novalidate>
+        <form class="needs-validation" id="student_registration" data-action="student_registration_api_url" method="POST" action="{{route('student.save')}}" enctype="multipart/form-data" novalidate>
             @csrf
             <div class="row justify-content-center">
                 <div class="col-md-6">
@@ -83,10 +83,50 @@
                     <label for="description" class="form-label">Description:</label>
                     <textarea class="form-control" id="description" name="description" value="{{old('description')}}" rows="3"></textarea>
                 </div>
-                    <button type="submit" onclick="validateForm('student_registration')" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </form>
+
+
+        <form class="needs-validation" novalidate>
+            <input type="text" name="abc" class="form-control" placeholder="Enter name" required>
+            <div class="invalid-feedback"> This field is required.</div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+        <ul class="ll">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+        <ul class="ll">
+            <li>A</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+        <script>
+            var abc = document.querySelectorAll('.ll li');
+            // abc[2].classList.add('text-danger');
+            // console.log(abc.length);
+            // for (let index = 0; index < abc.length; index++) {
+            //     abc[index].classList.add('text-danger');
+            // }
+            
+            // abc.forEach(element => {
+            //     element.classList.add('text-danger');
+            // });
+
+            // [...abc].map(function(ele){
+            //     ele.classList.add('text-danger');
+            // });
+
+        </script>
+
     </div>
     <script src="{{url('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{url('assets/js/custom.js')}}"></script>
