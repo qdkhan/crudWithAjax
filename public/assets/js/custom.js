@@ -1,48 +1,3 @@
-// function validateForm(id) {
-//     'use strict'
-//     var forms = document.querySelectorAll(`#${id}`)
-//     Array.prototype.slice.call(forms)
-//       .forEach(function (form) {
-//         form.addEventListener('click', function (event) {
-//           if (!form.checkValidity()) {
-//             event.preventDefault()
-//             event.stopPropagation()
-//             form.classList.add('was-validated')
-        
-//           }else {
-//             // event.preventDefault()
-//             // event.stopPropagation()
-//             console.log('All Form Filled')
-//           }
-//         }, false)
-//     })
-// };
-
-function validateForm (id) {
-  'use strict'
-  const forms = document.querySelectorAll(`#${id}`);
-  let valid = false;
-  Array.from(forms).forEach(function (form) {
-      form.classList.remove('was-validated');
-
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-          valid = false;
-          form.classList.add('was-validated');
-        } 
-        else {  
-          event.preventDefault();
-          event.stopPropagation();
-          valid = true;
-        }
-      }, false);
-    });
-
-    return valid;
-}
-
 function fetchMethod(id) {
 
   // var validated = validateForm(id);
@@ -60,23 +15,25 @@ function fetchMethod(id) {
 
 
 
-function fetchAPI(url, token, formid){
-  console.log(url +'<====>'+ token + '<====>'+formid);
-  const data = { username: 'example' };
-  fetch('https://example.com/profile', {
-    method: 'POST', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  }).then((response) => response.json()).then((data) => {
-      console.log('Success:', data);
+function fetchAPI(url,formid){
+  var formData = new FormData(document.getElementById(formid));
 
-    document.getElementById(formid).classList.remove('was-validated');
-    document.getElementById(formid).reset();
+  const data = formData;
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      "X-CSRF-Token": document.querySelector('input[name=_token]').value
+    },
+    body: data,
+  }).then((response) => response.json()).then((data) => {
+      console.log(data.success);
+      
+      document.getElementById(formid).classList.remove('was-validated');
+      document.getElementById(formid).reset();
   })
   .catch((error) => {
-    alert('something error');
+    // alert('something went wrong');
     console.error('Error:', error);
   });
 };
@@ -90,8 +47,8 @@ function fetchAPI(url, token, formid){
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
 
-      let form_id = event.target.id;
-      let action_url = event.target.dataset.action;
+      let formId = event.target.id;
+      let actionUrl = event.target.dataset.action;
       let my_token = '1234';
 
       if (!form.checkValidity()) {
@@ -101,7 +58,7 @@ function fetchAPI(url, token, formid){
         event.preventDefault();
         event.stopPropagation();
 
-        fetchAPI(action_url, my_token, form_id);
+        fetchAPI(actionUrl, formId);
       }
       form.classList.add('was-validated');
     }, false)

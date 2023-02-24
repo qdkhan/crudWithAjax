@@ -47,9 +47,13 @@ class AjaxController extends Controller
             $student->description = $request->description ?? '';
             $student->images = implode(',',$imageNameArr);
             $student->save();
-
             DB::commit();
-            return redirect()->back()->with('message', 'Data inserted successfully!!');
+
+            if($student->id) {
+                return response()->json(['success'=>'Data inserted successfully!!']);
+            }
+            
+            // return redirect()->back()->with('message', 'Data inserted successfully!!');
 
         } catch(Exception $e) {
             DB::rollBack();
